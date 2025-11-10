@@ -5,12 +5,12 @@ const scoreboard = document.getElementById("scoreboard");
 const simpleBackground = new Image();
 simpleBackground.src = "assets/background/simple-background.gif";
 const trashSize = 40; // tamanho do lixo
-const trashSpeed = 5; // velocidade do movimento até a lixeira
+const trashSpeed = 2; // velocidade do movimento até a lixeira
 const totalTrash = 15; // quantidade de lixos por rodada
 
-//canvas.style.background = "url(assets/background/simple-background.gif)";
-//canvas.style.backgroundSize = "cover";
-//canvas.style.backgroundRepeat = "no-repeat";
+canvas.style.background = "url(assets/background/background-teste.png)";
+canvas.style.backgroundSize = "cover";
+canvas.style.backgroundRepeat = "no-repeat";
 
 let trashTypes = [
   { color: "yellow", key: "ArrowUp", x: canvas.width / 2, y: 0 }, // Plástico
@@ -53,14 +53,14 @@ function drawBins() {
     left: new Image(),
   };
 
-  binImages.up.src = "assets/trash/bin-yellow.png";
+  binImages.up.src = "assets/trash/yellowTrash-removebg.png";
   binImages.right.src = "assets/trash/blueTrash-removebg.png";
-  binImages.down.src = "assets/trash/bin-gray.png";
+  binImages.down.src = "assets/trash/grayTrash-removebg.png";
   binImages.left.src = "assets/trash/greenTrash-removebg.png";
 
   //cima
-  ctx.drawImage(binImages.up, bins.up.x, bins.up.y, 100, 50);
-  ctx.fillRect(bins.up.x, bins.up.y, 100, 50);
+  ctx.drawImage(binImages.up, bins.up.x - 200, bins.up.y - 50, 500, 400);
+
   // direita
   ctx.drawImage(
     binImages.right,
@@ -77,6 +77,7 @@ function drawBins() {
   ctx.drawImage(binImages.left, bins.left.x - 250, bins.left.y - 100, 700, 570);
   ctx.fillStyle = bins.left.color;
   //ctx.fillRect(bins.left.x, bins.left.y, 50, 100);
+  ctx.drawImage(binImages.down, bins.down.x - 250, bins.down.y - 450, 650, 650);
 }
 
 // Desenha o lixo atual
@@ -130,17 +131,44 @@ function moveToBin(key) {
         canvas.style.backgroundColor = "green";
         setTimeout(() => {
           canvas.style.background =
-            "url(assets/background/complex-background.avif)";
+            "url(assets/background/background-teste.png)";
           canvas.style.backgroundSize = "cover";
           canvas.style.backgroundRepeat = "no-repeat";
         }, 400);
       } else {
-        canvas.style.backgroundColor = "red";
+        // insere keyframes de shake se ainda não existir
+        if (!document.getElementById("shake-style")) {
+          const style = document.createElement("style");
+          style.id = "shake-style";
+          style.innerHTML = `
+        @keyframes shake {
+          0% { transform: translate(0,0) rotate(0); }
+          10% { transform: translate(-6px,-2px) rotate(-1deg); }
+          20% { transform: translate(6px,2px) rotate(1deg); }
+          30% { transform: translate(-6px,2px) rotate(-1deg); }
+          40% { transform: translate(6px,-2px) rotate(1deg); }
+          50% { transform: translate(-6px,0) rotate(0); }
+          60% { transform: translate(6px,2px) rotate(1deg); }
+          70% { transform: translate(-6px,-2px) rotate(-1deg); }
+          80% { transform: translate(6px,0) rotate(0); }
+          90% { transform: translate(-3px,2px) rotate(0); }
+          100% { transform: translate(0,0) rotate(0); }
+        }
+        `;
+          document.head.appendChild(style);
+        }
+
+        // aplica animação de shake ao canvas (será removida após o tempo)
+        canvas.style.animation = "shake 0.4s";
+        canvas.style.animationTimingFunction = "ease-in-out";
+
         setTimeout(() => {
           canvas.style.background =
-            "url(assets/background/complex-background.avif)";
+            "url(assets/background/background-teste.png)";
           canvas.style.backgroundSize = "cover";
           canvas.style.backgroundRepeat = "no-repeat";
+          // limpa a animação para permitir retrigger futuro
+          canvas.style.animation = "";
         }, 400);
         score.miss++;
       }
@@ -149,7 +177,7 @@ function moveToBin(key) {
   }, 30);
 }
 
-// Passa para próximo lixo
+// Passa para próximo lix
 function nextTrash() {
   trashIndex++;
   if (trashIndex >= totalTrash) {
@@ -175,7 +203,12 @@ function startGame() {
 function endGame() {
   gameStarted = false;
   let elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
-  scoreboard.textContent = `Acertos: ${score.hit} | Erros: ${score.miss} | Tempo: ${elapsed}s`;
+  alert("Jogo terminado!");
+  scoreboard.textContent = 
+  `Acertos: ${score.hit} | Erros: ${score.miss} | Tempo: ${elapsed}s`;
+  // aumentar o texto do scoreboard
+  scoreboard.style.fontSize = "20px";
+  scoreboard.style.color = "white";
 }
 
 // Loop de animação
