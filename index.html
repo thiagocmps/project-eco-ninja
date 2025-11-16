@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-<meta charset="UTF-8">
-<title>Jogo da Separação de Lixo</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div id="gameContainer">
-    <canvas id="gameCanvas" width="1200" height="800"></canvas>
-</div>
-<button id="startBtn">Jogar</button>
-<div id="scoreboard"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jogo da Separação de Lixo</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <h1 class="title gochi-hand-regular" >Jogo da Separação de </h1>
+    <h1 id="trashTitle" class="title gochi-hand-regular">Lixo</h1>
+    <div id="gameContainer">
+      <canvas id="gameCanvas" class="gameCanvas" width="1200" height="800"></canvas>
+    </div>
+    <div id="gameOverModal" class="overlay">
+      <div class="modal-content">
+        <h2>Fim de Jogo!</h2>
+        <p id="finalScore"></p>
+        <button id="restartBtn">Reiniciar Jogo</button>
+      </div>
+    </div>
+    <button id="startBtn">Jogar</button>
+    <div id="scoreboard"></div>
 
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

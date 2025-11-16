@@ -1,42 +1,143 @@
 body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        height: 100vh;
-        margin: 0;
-        background-color: #81498a;
-        font-family: monospace;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  background-color: #81498a;
+  font-family: monospace;
+}
 
-    h1 {
-        margin-bottom: 20px;
-    }
+h1 {
+  font-size: 48px;
+  color: #fff;
+}
 
-    #gameContainer {
-        position: relative;
-        width: 1200px;
-        height: 800px;
-        border: 3px solid #000;
-        background-color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+#trashTitle {
+  color: #f0e68c;
+}
+.title {
+  display: inline-block;
+  margin: 0; /* opcional, evita quebra estranha */
+}
 
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
+#gameContainer {
+  position: relative;
+  width: 1200px;
+  height: 800px;
+  border: 3px solid #000;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        font-size: 28px;
-        cursor: pointer;
-    }
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
-    #scoreboard {
-        margin-top: 10px;
-    }
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color:#000;
+  background-color: #f0e68c;
+  border: 2px solid #000;
+  border-radius: 8px;
+}
+
+#scoreboard {
+  margin-top: 10px;
+}
+
+.gochi-hand-regular {
+  font-family: "Gochi Hand", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+/* Overlay cobrindo toda a tela */
+.overlay {
+  position: fixed; /* fica presa na tela */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.6); /* fundo escuro */
+
+  display: flex; /* para centralizar a modal */
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999; /* fica por cima de TUDO */
+  visibility: hidden; /* começa invisível */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.p {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 4px solid #81498a;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+  10% {
+    transform: translate(-6px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(6px, 2px) rotate(1deg);
+  }
+  30% {
+    transform: translate(-6px, 2px) rotate(-1deg);
+  }
+  40% {
+    transform: translate(6px, -2px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-6px, 0) rotate(0);
+  }
+  60% {
+    transform: translate(6px, 2px) rotate(1deg);
+  }
+  70% {
+    transform: translate(-6px, -2px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(6px, 0) rotate(0);
+  }
+  90% {
+    transform: translate(-3px, 2px) rotate(0);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
